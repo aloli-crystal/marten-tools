@@ -1,6 +1,6 @@
 # Show database statistics: connections, cache hit ratio, age, row counts.
 # FR: Affiche les statistiques de la base : connexions, ratio de cache, âge, nombre de lignes.
-class MartenTools::DbStats < Marten::CLI::Manage::Command::Base
+class MartenTools::DbStats < Marten::CLI::Command
   command_name :dbstats
   help "Show database statistics (connections, cache hit ratio, age, table row counts)."
 

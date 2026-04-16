@@ -1,6 +1,6 @@
 # Kill orphan Marten server processes.
 # FR: Tue les processus orphelins de marten serve.
-class MartenTools::Cleanup < Marten::CLI::Manage::Command::Base
+class MartenTools::Cleanup < Marten::CLI::Command
   command_name :cleanup
   help "Kill orphan Marten server processes. Use --show to list without killing."
 

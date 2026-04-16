@@ -1,6 +1,6 @@
 # Show the size of the current database and its biggest tables.
 # FR: Affiche la taille de la base de données courante et de ses plus grosses tables.
-class MartenTools::DbSize < Marten::CLI::Manage::Command::Base
+class MartenTools::DbSize < Marten::CLI::Command
   command_name :dbsize
   help "Show the size of the current database and its top 10 biggest tables."
 

@@ -1,6 +1,6 @@
 # Drop PostgreSQL database defined in Marten settings.
 # FR: Supprime la base de données PostgreSQL définie dans les paramètres Marten.
-class MartenTools::DropDb < Marten::CLI::Manage::Command::Base
+class MartenTools::DropDb < Marten::CLI::Command
   command_name :dropdb
   help "Drop the PostgreSQL database defined in Marten settings."
 

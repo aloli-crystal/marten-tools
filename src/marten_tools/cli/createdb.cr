@@ -1,6 +1,6 @@
 # Create PostgreSQL database from Marten settings.
 # FR: Crée la base de données PostgreSQL définie dans les paramètres Marten.
-class MartenTools::CreateDb < Marten::CLI::Manage::Command::Base
+class MartenTools::CreateDb < Marten::CLI::Command
   command_name :createdb
   help "Create the PostgreSQL database defined in Marten settings."
 

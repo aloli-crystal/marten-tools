@@ -1,6 +1,6 @@
 # Reset database: drop, create, and run migrations.
 # FR: Réinitialise la base : suppression, création, et migrations.
-class MartenTools::ResetDb < Marten::CLI::Manage::Command::Base
+class MartenTools::ResetDb < Marten::CLI::Command
   command_name :resetdb
   help "Drop, recreate, and migrate the PostgreSQL database (combines dropdb + createdb + migrate)."
 
@@ -70,7 +70,10 @@ class MartenTools::ResetDb < Marten::CLI::Manage::Command::Base
     # FR: Étape 3 : Exécuter les migrations.
     print(style("Step 3/3: Running migrations...", fore: :cyan))
 
-    Marten::CLI::Manage::Command::Migrate.new(options: [] of String, stdout: stdout, stderr: stderr).handle
+    status = Process.run("marten migrate", shell: true, output: STDOUT, error: STDERR)
+    unless status.success?
+      print_error_and_exit("Migration failed (exit code #{status.exit_code}).")
+    end
 
     print(style("  Database reset complete.", fore: :green, mode: :bold))
   rescue ex

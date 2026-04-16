@@ -5,7 +5,7 @@
 #   {{APP_HOME}}      — application root directory (env APP_HOME or cwd)
 #   {{APP_FULL_NAME}} — application name (env APP_FULL_NAME or directory basename)
 #   {{MARTEN_ENV}}    — current Marten environment (env MARTEN_ENV or "development")
-class MartenTools::InstallCron < Marten::CLI::Manage::Command::Base
+class MartenTools::InstallCron < Marten::CLI::Command
   command_name :install_cron
   help "Install crontab from config/cron/crontab template (idempotent)."
 

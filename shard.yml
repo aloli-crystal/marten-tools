@@ -1,0 +1,16 @@
+name: marten-tools
+version: 0.1.0
+description: |
+  Collection of useful CLI commands for Marten Framework projects.
+  Database management (createdb, dropdb, resetdb, dbsize, dbstats),
+  process cleanup, crontab installation.
+authors:
+  - Philippe Nénert <philippe@aloli.fr>
+license: MIT
+dependencies:
+  marten:
+    github: martenframework/marten
+    branch: main
+  pg:
+    github: will/crystal-pg
+crystal: ">= 1.19.0"

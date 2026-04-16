@@ -1,0 +1,132 @@
+= Marten Tools
+:toc:
+:toc-placement!:
+
+Collection of useful CLI commands for https://martenframework.com[Marten Framework] projects.
+
+toc::[]
+
+== Features
+
+* *createdb* -- Create the PostgreSQL database from Marten settings
+* *dropdb* -- Drop the PostgreSQL database (with production safety check)
+* *resetdb* -- Drop + create + migrate in one step
+* *dbsize* -- Show database and table sizes
+* *dbstats* -- Show database statistics (connections, cache hit ratio, age, row counts)
+* *cleanup* -- Kill orphan Marten server processes
+* *install_cron* -- Install crontab from a template file
+
+== Installation
+
+Add the dependency to your `shard.yml`:
+
+[source,yaml]
+----
+dependencies:
+  marten_tools:
+    github: aloli-crystal/marten-tools
+----
+
+Run `shards install`.
+
+== Usage
+
+Add to your `src/project.cr` (or wherever you require your dependencies):
+
+[source,crystal]
+----
+require "marten_tools"
+----
+
+This auto-registers all CLI commands. They become available through your `manage` CLI:
+
+[source,bash]
+----
+# Database management
+marten createdb        # Create the database
+marten dropdb          # Drop the database
+marten resetdb         # Drop + create + migrate
+
+# Database info
+marten dbsize          # Show database and table sizes
+marten dbstats         # Show connections, cache hit ratio, etc.
+
+# Process management
+marten cleanup         # Kill orphan server processes
+marten cleanup --show  # List processes without killing
+marten cleanup -p 8080 # Check a specific port
+
+# Crontab
+marten install_cron    # Install crontab from config/cron/crontab
+----
+
+== Commands
+
+=== createdb
+
+Creates the PostgreSQL database defined in your Marten `default` database settings.
+Connects to the `postgres` system database to execute `CREATE DATABASE`.
+Skips if the database already exists.
+
+=== dropdb
+
+Drops the PostgreSQL database. Terminates active connections first.
+In production environment, asks for confirmation by typing the database name.
+
+=== resetdb
+
+Convenience command that runs dropdb + createdb + migrate in sequence.
+In production, asks for confirmation before proceeding.
+
+=== dbsize
+
+Shows the total database size and the top 10 biggest tables with estimated row counts.
+
+=== dbstats
+
+Shows database statistics:
+
+* Active connections count
+* Cache hit ratio (color-coded: green >= 99%, yellow >= 95%, red < 95%)
+* Database age (frozen transaction ID)
+* Database size
+* Table row counts (estimated from `pg_stat_user_tables`)
+
+=== cleanup
+
+Finds and kills orphan Marten processes:
+
+* Processes listening on port 3000 (configurable with `--port`)
+* Orphan `bin/manage` processes
+* Orphan `bin/server` processes
+
+Sends SIGTERM first, then SIGKILL if processes persist.
+
+=== install_cron
+
+Installs a crontab from the template file `config/cron/crontab`.
+Supports variable substitution:
+
+* `{{APP_HOME}}` -- Application root (env `APP_HOME` or current directory)
+* `{{APP_FULL_NAME}}` -- Application name (env `APP_FULL_NAME` or directory basename)
+* `{{MARTEN_ENV}}` -- Marten environment (env `MARTEN_ENV` or "development")
+
+Idempotent: skips if the crontab is already up to date.
+
+== Requirements
+
+* Crystal >= 1.19.0
+* PostgreSQL (for database commands)
+* Marten Framework
+
+== Contributing
+
+. Fork it (https://github.com/aloli-crystal/marten-tools/fork)
+. Create your feature branch (`git checkout -b my-new-feature`)
+. Commit your changes (`git commit -am 'Add some feature'`)
+. Push to the branch (`git push origin my-new-feature`)
+. Create a new Pull Request
+
+== License
+
+MIT License. See link:LICENSE[LICENSE] for details.

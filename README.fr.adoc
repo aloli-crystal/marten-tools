@@ -1,0 +1,132 @@
+= Marten Tools
+:toc:
+:toc-placement!:
+
+Collection de commandes CLI utiles pour les projets https://martenframework.com[Marten Framework].
+
+toc::[]
+
+== Fonctionnalites
+
+* *createdb* -- Cree la base de donnees PostgreSQL depuis les parametres Marten
+* *dropdb* -- Supprime la base de donnees PostgreSQL (avec verification en production)
+* *resetdb* -- Supprime + cree + migre en une seule etape
+* *dbsize* -- Affiche la taille de la base et des tables
+* *dbstats* -- Affiche les statistiques de la base (connexions, ratio de cache, age, nombre de lignes)
+* *cleanup* -- Tue les processus orphelins du serveur Marten
+* *install_cron* -- Installe le crontab depuis un fichier modele
+
+== Installation
+
+Ajoutez la dependance dans votre `shard.yml` :
+
+[source,yaml]
+----
+dependencies:
+  marten_tools:
+    github: aloli-crystal/marten-tools
+----
+
+Lancez `shards install`.
+
+== Utilisation
+
+Ajoutez dans votre `src/project.cr` (ou la ou vous chargez vos dependances) :
+
+[source,crystal]
+----
+require "marten_tools"
+----
+
+Toutes les commandes CLI sont automatiquement enregistrees. Elles sont disponibles via votre CLI `manage` :
+
+[source,bash]
+----
+# Gestion de la base de donnees
+marten createdb        # Creer la base
+marten dropdb          # Supprimer la base
+marten resetdb         # Supprimer + creer + migrer
+
+# Informations sur la base
+marten dbsize          # Taille de la base et des tables
+marten dbstats         # Connexions, ratio de cache, etc.
+
+# Gestion des processus
+marten cleanup         # Tuer les processus orphelins
+marten cleanup --show  # Lister sans tuer
+marten cleanup -p 8080 # Verifier un port specifique
+
+# Crontab
+marten install_cron    # Installer le crontab depuis config/cron/crontab
+----
+
+== Commandes
+
+=== createdb
+
+Cree la base de donnees PostgreSQL definie dans les parametres de connexion `default` de Marten.
+Se connecte a la base systeme `postgres` pour executer `CREATE DATABASE`.
+Ne fait rien si la base existe deja.
+
+=== dropdb
+
+Supprime la base de donnees PostgreSQL. Termine les connexions actives au prealable.
+En environnement de production, demande confirmation en saisissant le nom de la base.
+
+=== resetdb
+
+Commande pratique qui execute dropdb + createdb + migrate en sequence.
+En production, demande confirmation avant de proceder.
+
+=== dbsize
+
+Affiche la taille totale de la base et les 10 plus grosses tables avec le nombre estime de lignes.
+
+=== dbstats
+
+Affiche les statistiques de la base :
+
+* Nombre de connexions actives
+* Ratio de cache (colore : vert >= 99%, jaune >= 95%, rouge < 95%)
+* Age de la base (identifiant de transaction gelee)
+* Taille de la base
+* Nombre de lignes par table (estime depuis `pg_stat_user_tables`)
+
+=== cleanup
+
+Trouve et tue les processus Marten orphelins :
+
+* Processus en ecoute sur le port 3000 (configurable avec `--port`)
+* Processus `bin/manage` orphelins
+* Processus `bin/server` orphelins
+
+Envoie SIGTERM d'abord, puis SIGKILL si les processus persistent.
+
+=== install_cron
+
+Installe un crontab depuis le fichier modele `config/cron/crontab`.
+Supporte la substitution de variables :
+
+* `{{APP_HOME}}` -- Racine de l'application (env `APP_HOME` ou repertoire courant)
+* `{{APP_FULL_NAME}}` -- Nom de l'application (env `APP_FULL_NAME` ou nom du repertoire)
+* `{{MARTEN_ENV}}` -- Environnement Marten (env `MARTEN_ENV` ou "development")
+
+Idempotent : ne fait rien si le crontab est deja a jour.
+
+== Prerequis
+
+* Crystal >= 1.19.0
+* PostgreSQL (pour les commandes de base de donnees)
+* Marten Framework
+
+== Contribuer
+
+. Forkez le projet (https://github.com/aloli-crystal/marten-tools/fork)
+. Creez votre branche (`git checkout -b ma-nouvelle-fonctionnalite`)
+. Commitez vos modifications (`git commit -am 'Ajout d une fonctionnalite'`)
+. Poussez la branche (`git push origin ma-nouvelle-fonctionnalite`)
+. Creez une Pull Request
+
+== Licence
+
+Licence MIT. Voir link:LICENSE[LICENSE] pour les details.

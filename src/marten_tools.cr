@@ -1,4 +1,5 @@
 require "marten"
+require "marten/cli"
 require "db"
 require "pg"
 

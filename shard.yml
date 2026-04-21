@@ -13,4 +13,10 @@ dependencies:
     branch: main
   pg:
     github: will/crystal-pg
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: "~> 1.6"
+
 crystal: ">= 1.19.0"

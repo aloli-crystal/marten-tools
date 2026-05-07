@@ -1,5 +1,5 @@
 name: marten-tools
-version: 0.1.1
+version: 0.1.2
 description: |
   Collection of useful CLI commands for Marten Framework projects.
   Database management (createdb, dropdb, resetdb, dbsize, dbstats),

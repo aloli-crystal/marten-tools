@@ -10,7 +10,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     container:
-      image: crystallang/crystal:latest
+      image: crystallang/crystal:1.19.1
     services:
       postgres:
         image: postgres:16

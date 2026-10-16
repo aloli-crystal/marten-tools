@@ -2,14 +2,14 @@ version: 2.0
 shards:
   ameba:
     git: https://github.com/crystal-ameba/ameba.git
-    version: 1.6.4
+    version: 1.7.0
 
   db:
     git: https://github.com/crystal-lang/crystal-db.git
     version: 0.13.1
 
   i18n:
-    git: https://github.com/i18n/i18n.git
+    git: https://github.com/crystal-i18n/i18n.git
     version: 0.2.2
 
   marten:

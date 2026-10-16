@@ -10,7 +10,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     container:
-      image: crystallang/crystal:1.19.1
+      image: crystallang/crystal:1.22.0
     services:
       postgres:
         image: postgres:16
@@ -35,7 +35,7 @@ jobs:
         run: crystal tool format --check src/ spec/
 
       - name: Run linter
-        run: bin/ameba
+        run: crystal run lib/ameba/bin/ameba.cr --
 
       - name: Build
         run: crystal build src/marten_tools.cr --no-codegen

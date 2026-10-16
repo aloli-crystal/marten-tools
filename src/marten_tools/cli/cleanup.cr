@@ -68,10 +68,8 @@ class MartenTools::Cleanup < Marten::CLI::Command
       # FR: Processus récalcitrants — SIGKILL.
       print(style("Stubborn processes remaining, sending SIGKILL...", fore: :yellow))
       remaining.each do |pid|
-        begin
-          Process.signal(Signal::KILL, pid)
-        rescue
-        end
+        Process.signal(Signal::KILL, pid)
+      rescue
       end
       sleep 500.milliseconds
       if find_pids_on_port(port).empty?
@@ -101,12 +99,10 @@ class MartenTools::Cleanup < Marten::CLI::Command
 
   private def kill_pids(pids : Array(Int64))
     pids.each do |pid|
-      begin
-        Process.signal(Signal::TERM, pid)
-        print(style("  PID #{pid} — SIGTERM sent", fore: :green))
-      rescue
-        print(style("  PID #{pid} — could not signal", fore: :yellow))
-      end
+      Process.signal(Signal::TERM, pid)
+      print(style("  PID #{pid} — SIGTERM sent", fore: :green))
+    rescue
+      print(style("  PID #{pid} — could not signal", fore: :yellow))
     end
   end
 end

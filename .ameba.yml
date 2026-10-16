@@ -51,3 +51,7 @@ Documentation/DocumentationAdmonition:
 
 Naming/PredicateName:
   Enabled: false
+
+# Ameba 1.7 : la correction automatique de cette règle change le CONTENU des heredocs dont les lignes sont volontairement décalées — désactivée plutôt qu'appliquée.
+Style/HeredocIndent:
+  Enabled: false

@@ -1,5 +1,5 @@
 name: marten-tools
-version: 0.1.2
+version: 0.1.3
 description: |
   Collection of useful CLI commands for Marten Framework projects.
   Database management (createdb, dropdb, resetdb, dbsize, dbstats),
@@ -17,6 +17,6 @@ dependencies:
 development_dependencies:
   ameba:
     github: crystal-ameba/ameba
-    version: "~> 1.6"
+    version: "~> 1.7"
 
 crystal: ">= 1.19.0"

@@ -3,6 +3,10 @@
 :toc-title: Versions
 :toclevels: 2
 
+== v0.1.3 — 2026-10-16
+
+* ameba 1.7 et Crystal 1.22.0 en CI ; nouvelles règles appliquées, aucun changement de comportement.
+
 == v0.1.1 — 2026-04-22
 
 * Ajout du linter *ameba* à la CI avec configuration `.ameba.yml` partagée alignée sur l'écosystème Crystal.
